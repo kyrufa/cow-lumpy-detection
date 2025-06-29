@@ -36,31 +36,31 @@ def preprocess_and_augment(img_array, size=(256, 256)):
     else:
         img_gray = img_array # It's already grayscale
 
-    st.image(img_gray, caption='Gambar grayscale', use_column_width=True)
+    # st.image(img_gray, caption='Gambar grayscale', use_column_width=True)
 
     img_resize = cv2.resize(img_gray, size)
-    st.image(img_resize, caption='Gambar setelah resize', use_column_width=True)
+    # st.image(img_resize, caption='Gambar setelah resize', use_column_width=True)
 
     img_blur   = cv2.GaussianBlur(img_resize, (5, 5), 0)
-    st.image(img_blur, caption='Gambar setelah Gaussian Blur', use_column_width=True)
+    # st.image(img_blur, caption='Gambar setelah Gaussian Blur', use_column_width=True)
 
     img_norm = cv2.normalize(img_blur, None, 0, 255, cv2.NORM_MINMAX, dtype=cv2.CV_8U)
-    st.image(img_norm, caption='Gambar setelah normalisasi', use_column_width=True)
+    # st.image(img_norm, caption='Gambar setelah normalisasi', use_column_width=True)
 
     # Augmentasi citra
     aug_imgs = [img_norm]                                # original
     aug_imgs.append(cv2.flip(img_norm, 1))               # flip
-    st.image(aug_imgs[1], caption='Gambar setelah flip horizontal', use_column_width=True)
+    # st.image(aug_imgs[1], caption='Gambar setelah flip horizontal', use_column_width=True)
 
     h, w = img_norm.shape
     M = cv2.getRotationMatrix2D((w // 2, h // 2), 15, 1)
     aug_imgs.append(cv2.warpAffine(img_norm, M, (w, h))) # rotasi
-    st.image(aug_imgs[2], caption='Gambar setelah rotasi 15 derajat', use_column_width=True)
+    # st.image(aug_imgs[2], caption='Gambar setelah rotasi 15 derajat', use_column_width=True)
 
     noise = np.random.normal(0, 25, img_norm.shape).astype(np.int16)
     noisy = np.clip(img_norm.astype(np.int16) + noise, 0, 255).astype(np.uint8)
     aug_imgs.append(noisy)                               # noise
-    st.image(aug_imgs[3], caption='Gambar setelah penambahan noise Gaussian', use_column_width=True)
+    # st.image(aug_imgs[3], caption='Gambar setelah penambahan noise Gaussian', use_column_width=True)
     return aug_imgs
 
 def extract_glcm_features(image_array):
