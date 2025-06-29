@@ -2,9 +2,6 @@ streamlit
 pandas
 Pillow
 numpy
-git add requirements.txt
-git commit -m "use opencv-python-headless for Streamlit Cloud"
-git push origin main
 opencv-python-headless
 joblib
 scikit-image
